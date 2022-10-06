@@ -20,7 +20,8 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/js/**", "/css/**", "/img/**").permitAll()
+                .antMatchers("/js/**", "/css/**", "/img/**", "/register").permitAll()
+                .antMatchers("/register").permitAll()
                 .antMatchers("/api/**").hasRole("USER")
                 .and()
                 .formLogin((form) -> form
