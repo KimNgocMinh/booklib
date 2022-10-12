@@ -1,10 +1,13 @@
 package com.minh.booklib.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties({ "favoriteBooks" })
 public class User {
 
     @Id
@@ -15,7 +18,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users",cascade = CascadeType.PERSIST)
     private List<Book> favoriteBooks;
 
     public String getUsername() {

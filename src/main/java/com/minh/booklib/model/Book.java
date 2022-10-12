@@ -1,11 +1,14 @@
 package com.minh.booklib.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Table(name = "book")
+@JsonIgnoreProperties({ "users" })
 public class Book {
 
 
@@ -15,15 +18,25 @@ public class Book {
     private Long id;
     private String author;
     private String description;
+
     private LocalDate publishDate;
 
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "user_favor_book",
             joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "username")
     )
     private List<User> users;
+
+    public Book() {
+    }
+
+    public Book(String author, String title, LocalDate localDate) {
+        this.author = author;
+        this.title = title;
+        this.publishDate = localDate;
+    }
 
     public String getTitle() {
         return title;
